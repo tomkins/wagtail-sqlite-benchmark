@@ -46,8 +46,13 @@ class WagtailUser(BaseWagtailUser):
     @task
     def view_page(self):
         wagtail_page = random.choice(self.wagtail_pages)
+        # API always returns full URLs based on the Wagtail Site model - which by default has an
+        # initial 127.0.0.1:8000 entry. Stripping this out for convenience if we're running this
+        # remotely.
+        page_url = wagtail_page["meta"]["html_url"]
+        page_url = page_url.replace("http://127.0.0.1:8000", "")
         self.client.get(
-            wagtail_page["meta"]["html_url"],
+            page_url,
             name="/[{}]".format(wagtail_page["meta"]["type"]),
         )
 
