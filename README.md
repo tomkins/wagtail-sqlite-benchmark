@@ -34,7 +34,9 @@ gunicorn \
 uwsgi \
     --env=DJANGO_SETTINGS_MODULE=bakerydemo.settings.production \
     --env=DJANGO_SECRET_KEY=demo \
-    --http-socket=127.0.0.1:8000 \
+    --master \
+    --http11-socket=127.0.0.1:8000 \
+    --disable-logging \
     --workers=4 \
     --module=bakerydemo.wsgi
 ```
