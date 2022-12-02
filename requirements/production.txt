@@ -13,3 +13,8 @@ botocore>=1.12.33,<1.13
 aws-requests-auth==0.4.0
 django-redis==5.2.0
 django_cache_url==2.0.0
+
+# Benchmarking
+locust==2.13.0
+Scrapy==2.7.1
+gunicorn==20.1.0
