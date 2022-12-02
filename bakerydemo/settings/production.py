@@ -43,6 +43,9 @@ DATABASES["default"].update(db_from_env)
 # Enable persistent connections
 DATABASES["default"]["CONN_MAX_AGE"] = 60
 
+# Tweaked sqlite3 backend to avoid locked database errors
+DATABASES["default"]["ENGINE"] = "bakerydemo.sqlite3"
+
 # AWS creds may be used for S3 and/or Elasticsearch
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
