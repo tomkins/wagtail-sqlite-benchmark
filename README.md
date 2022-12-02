@@ -24,7 +24,7 @@ pip install -r requirements/production.txt
 gunicorn \
     --env=DJANGO_SETTINGS_MODULE=bakerydemo.settings.production \
     --env=DJANGO_SECRET_KEY=demo \
-    --workers=1 \
+    --workers=4 \
     bakerydemo.wsgi:application
 ```
 
@@ -35,7 +35,7 @@ uwsgi \
     --env=DJANGO_SETTINGS_MODULE=bakerydemo.settings.production \
     --env=DJANGO_SECRET_KEY=demo \
     --http-socket=127.0.0.1:8000 \
-    --workers=1 \
+    --workers=4 \
     --module=bakerydemo.wsgi
 ```
 
@@ -46,5 +46,5 @@ locust \
     --headless \
     --host http://127.0.0.1:8000 \
     --run-time 1m \
-    --users 1
+    --users 4
 ```
