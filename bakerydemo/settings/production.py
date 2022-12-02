@@ -40,6 +40,9 @@ WAGTAILADMIN_BASE_URL = "http://localhost:8000"
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES["default"].update(db_from_env)
 
+# Enable persistent connections
+DATABASES["default"]["CONN_MAX_AGE"] = 60
+
 # AWS creds may be used for S3 and/or Elasticsearch
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
