@@ -53,7 +53,7 @@ class WagtailUser(BaseWagtailUser):
 
 
 class WagtailEditor(BaseWagtailUser):
-    fixed_count = 1
+    fixed_count = 2
 
     @task
     def edit_page(self):
