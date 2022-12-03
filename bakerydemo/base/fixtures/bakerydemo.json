@@ -1569,7 +1569,7 @@
     "model": "auth.user",
     "pk": 3,
     "fields": {
-      "password": "pbkdf2_sha256$30000$eIoVnauBvLhA$aPWJSlHK+F/rW7SKunxJ/RnXNQHx0uh6K/kVRyPn0XY=",
+      "password": "md5$5Ve4NkWG4cZGuZfP8OVjjc$32150a4e7e476653fc1252641890cc71",
       "last_login": "2019-04-23T19:58:19.460Z",
       "is_superuser": true,
       "username": "admin",
