@@ -1,10 +1,11 @@
 import random
+from urllib.parse import urlencode
 
-from locust import HttpUser, task
+from locust import FastHttpUser, task
 from scrapy.http.request.form import _get_form, _get_inputs
 
 
-class BaseWagtailUser(HttpUser):
+class BaseWagtailUser(FastHttpUser):
     abstract = True
 
     def on_start(self):
@@ -26,9 +27,13 @@ class BaseWagtailUser(HttpUser):
             dont_click=False,
             clickdata=None,
         )
+        form_data_payload = urlencode(form_data).encode()
         self.client.post(
             "/admin/login/",
-            form_data,
+            data=form_data_payload,
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
             allow_redirects=False,
         )
 
@@ -85,9 +90,13 @@ class WagtailEditor(BaseWagtailUser):
             dont_click=False,
             clickdata=None,
         )
+        form_data_payload = urlencode(form_data).encode()
         response = self.client.post(
             admin_url,
-            form_data,
-            allow_redirects=False,
             name="/admin/pages/[{}]/edit/".format(wagtail_page["meta"]["type"]),
+            data=form_data_payload,
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            allow_redirects=False,
         )
