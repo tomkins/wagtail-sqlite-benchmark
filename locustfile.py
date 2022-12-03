@@ -9,7 +9,7 @@ class BaseWagtailUser(HttpUser):
 
     def on_start(self):
         # Login to the Wagtail admin so we can view the pages API
-        response = self.client.get("/admin/")
+        response = self.client.get("/admin/login/")
         form = _get_form(
             response,
             formname=None,
@@ -27,8 +27,9 @@ class BaseWagtailUser(HttpUser):
             clickdata=None,
         )
         self.client.post(
-            "/admin/login/?next=/admin/",
+            "/admin/login/",
             form_data,
+            allow_redirects=False,
         )
 
         # Store the list of pages for view_page
@@ -87,5 +88,6 @@ class WagtailEditor(BaseWagtailUser):
         response = self.client.post(
             admin_url,
             form_data,
+            allow_redirects=False,
             name="/admin/pages/[{}]/edit/".format(wagtail_page["meta"]["type"]),
         )
