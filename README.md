@@ -48,5 +48,6 @@ locust \
     --headless \
     --host http://127.0.0.1:8000 \
     --run-time 1m \
+    --spawn-rate 4 \
     --users 4
 ```
