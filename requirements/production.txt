@@ -7,12 +7,13 @@ psycopg2>=2.7,<3.0
 whitenoise>=5.0,<5.1
 boto3==1.9.189
 google-cloud-storage==1.20.0
-django-storages>=1.8,<1.9
+django-storages==1.13.1
 # For retrieving credentials and signing requests to Elasticsearch
 botocore>=1.12.33,<1.13
 aws-requests-auth==0.4.0
 django-redis==5.2.0
 django_cache_url==2.0.0
+django-basic-auth-ip-whitelist==0.5
 
 # Benchmarking
 locust==2.13.0

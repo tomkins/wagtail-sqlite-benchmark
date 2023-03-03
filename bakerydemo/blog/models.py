@@ -13,7 +13,6 @@ from wagtail.models import Orderable, Page
 from wagtail.search import index
 
 from bakerydemo.base.blocks import BaseStreamBlock
-from bakerydemo.base.models import Person
 
 
 class BlogPersonRelationship(Orderable, models.Model):
@@ -99,7 +98,13 @@ class BlogPage(Page):
         with a loop on the template. If we tried to access the blog_person_
         relationship directly we'd print `blog.BlogPersonRelationship.None`
         """
-        return Person.objects.filter(live=True, person_blog_relationship__page=self)
+        # Only return authors that are not in draft
+        return [
+            n.person
+            for n in self.blog_person_relationship.filter(
+                person__live=True
+            ).select_related("person")
+        ]
 
     @property
     def get_tags(self):
@@ -109,10 +114,9 @@ class BlogPage(Page):
         We're additionally adding a URL to access BlogPage objects with that tag
         """
         tags = self.tags.all()
+        base_url = self.get_parent().url
         for tag in tags:
-            tag.url = "/" + "/".join(
-                s.strip("/") for s in [self.get_parent().url, "tags", tag.slug]
-            )
+            tag.url = f"{base_url}tags/{tag.slug}/"
         return tags
 
     # Specifies parent to BlogPage as being BlogIndexPages
@@ -148,7 +152,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
         FieldPanel("image"),
     ]
 
-    # Speficies that only BlogPage objects can live under this index page
+    # Specifies that only BlogPage objects can live under this index page
     subpage_types = ["BlogPage"]
 
     # Defines a method to access the children of the page (e.g. BlogPage

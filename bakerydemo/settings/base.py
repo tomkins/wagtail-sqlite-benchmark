@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "bakerydemo.blog",
     "bakerydemo.breads",
     "bakerydemo.locations",
+    "bakerydemo.recipes",
     "bakerydemo.search",
     "wagtail.contrib.search_promotions",
     "wagtail.contrib.forms",
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.api.v2",
     "wagtail.locales",
+    "wagtail.contrib.table_block",
+    "wagtail.contrib.typed_table_block",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.simple_translation",
@@ -61,7 +64,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "modelcluster",
     "taggit",
-    "wagtailfontawesome",
+    "wagtailfontawesomesvg",
     "debug_toolbar",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -184,3 +187,5 @@ WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("de", "Deutsch"),
     ("ar", "العربيّة"),
 ]
+
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme")
