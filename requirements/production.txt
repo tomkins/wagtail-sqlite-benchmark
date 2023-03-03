@@ -16,6 +16,6 @@ django_cache_url==2.0.0
 django-basic-auth-ip-whitelist==0.5
 
 # Benchmarking
-locust==2.13.0
-Scrapy==2.7.1
+locust==2.15.0
+Scrapy==2.8.0
 gunicorn==20.1.0
