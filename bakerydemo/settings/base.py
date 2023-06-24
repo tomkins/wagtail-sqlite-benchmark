@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(PROJECT_DIR, ...)
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -41,9 +43,6 @@ INSTALLED_APPS = [
     "bakerydemo.locations",
     "bakerydemo.recipes",
     "bakerydemo.search",
-    "wagtail.contrib.search_promotions",
-    "wagtail.contrib.forms",
-    "wagtail.contrib.redirects",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -54,10 +53,14 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.api.v2",
     "wagtail.locales",
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.contrib.routable_page",
     "wagtail.contrib.table_block",
     "wagtail.contrib.typed_table_block",
     "wagtail.contrib.modeladmin",
-    "wagtail.contrib.routable_page",
+    "wagtail.contrib.search_promotions",
+    "wagtail.contrib.settings",
     "wagtail.contrib.simple_translation",
     "wagtail.contrib.styleguide",
     "wagtail",
@@ -66,6 +69,7 @@ INSTALLED_APPS = [
     "taggit",
     "wagtailfontawesomesvg",
     "debug_toolbar",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -103,6 +107,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wagtail.contrib.settings.context_processors.settings",
             ],
         },
     },
@@ -114,12 +119,21 @@ WSGI_APPLICATION = "bakerydemo.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "bakerydemodb"),
+if "DATABASE_URL" in os.environ:
+    DATABASES = {"default": dj_database_url.config(conn_max_age=500)}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "bakerydemodb"),
+        }
     }
-}
+
+    # Enable persistent connections
+    DATABASES["default"]["CONN_MAX_AGE"] = 60
+
+    # Tweaked sqlite3 backend to avoid locked database errors
+    DATABASES["default"]["ENGINE"] = "bakerydemo.sqlite3"
 
 
 # Password validation
